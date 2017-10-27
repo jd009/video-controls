@@ -1,0 +1,32 @@
+.video-container {
+  display: block;
+  position: relative;
+
+  height: 360px;
+  width: 640px;
+
+}
+
+.video-container .video-element {
+  width: 100%;
+  height: auto;
+}
+
+.video-container .video-controls-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  cursor: pointer;
+  background-color: rgb(10, 10, 10);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+}
+
+.video-container .video-controls-container:hover {
+  opacity: 0.4;
+}
