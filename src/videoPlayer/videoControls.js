@@ -1,13 +1,41 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import ProgressBar from './controls/progressBar';
+
 import './videoControls.css';
 
 class VideoControls extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.state = {
+      progressPercentage: 0,
+    };
+
+    this.updateProgress = this.updateProgress.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.videoPlayerRef === null &&
+      nextProps.videoPlayerRef !== null) {
+      this.initControls(nextProps.videoPlayerRef);
+    }
+  }
+
+  initControls(videoPlayerRef) {
+    videoPlayerRef.addEventListener('timeupdate', this.updateProgress);
+  }
+
+  updateProgress() {
+    const currentTime = this.props.videoPlayerRef.currentTime;
+    const duration = this.props.videoPlayerRef.duration;
+    const progressFraction = currentTime / duration;
+    const progressPercentage = progressFraction * 100;
+    this.setState({
+      progressPercentage,
+    });
   }
 
   togglePlay(event) {
@@ -41,9 +69,11 @@ class VideoControls extends Component {
             <span className="play-icon"
               onClick={this.togglePlay}
               dangerouslySetInnerHTML={{__html: playPauseIcon}}
-            >
-            </span>
+            />
           </div>
+          <ProgressBar
+            progressPercentage={this.state.progressPercentage}
+          />
         </div>
       </div>
     );
