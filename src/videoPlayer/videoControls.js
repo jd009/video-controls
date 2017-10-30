@@ -9,11 +9,15 @@ class VideoControls extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.progressBarRef = null;
+
     this.state = {
       progressPercentage: 0,
     };
 
     this.updateProgress = this.updateProgress.bind(this);
+    this.onProgressBarClick = this.onProgressBarClick.bind(this);
+    this.saveProgressBarRef = this.saveProgressBarRef.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
   }
 
@@ -36,6 +40,25 @@ class VideoControls extends Component {
     this.setState({
       progressPercentage,
     });
+  }
+
+  onProgressBarClick(event) {
+    event.stopPropagation();
+
+    if (this.progressBarRef === null ||
+      this.props.videoPlayerRef ===  null) {
+      return;
+    }
+
+    const totalWidth = this.progressBarRef.offsetWidth;
+    const clickOffsetWidth = event.nativeEvent.offsetX;
+    const positionFraction = (clickOffsetWidth / totalWidth);
+    const newTime = positionFraction * this.props.videoPlayerRef.duration;
+    this.props.videoPlayerRef.currentTime = newTime;
+  }
+
+  saveProgressBarRef(node) {
+    this.progressBarRef = node;
   }
 
   togglePlay(event) {
@@ -61,9 +84,7 @@ class VideoControls extends Component {
       playPauseIcon = '&#9658;';
     }
     return (
-      <div className={'video-controls-container'}
-        onClick={this.togglePlay}
-      >
+      <div className={'video-controls-container'}>
         <div className={'video-controls-bar'}>
           <div className="video-controls-play">
             <span className="play-icon"
@@ -73,6 +94,8 @@ class VideoControls extends Component {
           </div>
           <ProgressBar
             progressPercentage={this.state.progressPercentage}
+            onProgressBarClick={this.onProgressBarClick}
+            saveProgressBarRef={this.saveProgressBarRef}
           />
         </div>
       </div>

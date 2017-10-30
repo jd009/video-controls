@@ -12,7 +12,10 @@ class ProgressBar extends Component {
 
     return (
       <div className="progress-bar-container">
-        <div className="progress-bar-outer">
+        <div className="progress-bar-outer"
+          ref={this.props.saveProgressBarRef}
+          onClick={this.props.onProgressBarClick}
+        >
           <div
             style={progressBarInnerStyle}
             className="progress-bar-inner"
@@ -25,6 +28,8 @@ class ProgressBar extends Component {
 
 ProgressBar.propTypes = {
   progressPercentage: PropTypes.number.isRequired,
+  onProgressBarClick: PropTypes.func.isRequired,
+  saveProgressBarRef: PropTypes.func.isRequired,
 };
 
 export default ProgressBar;

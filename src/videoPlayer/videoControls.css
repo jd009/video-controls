@@ -39,6 +39,7 @@
   border-right: 1px solid black;
 
   cursor: pointer;
+  user-select: none;
 }
 
 .video-controls-bar .video-controls-play:hover .play-icon {
