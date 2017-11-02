@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import ProgressBar from './controls/progressBar';
+import CurrentTimeDisplay from './controls/currentTimeDisplay';
 
 import './videoControls.css';
 
@@ -12,6 +13,7 @@ class VideoControls extends Component {
     this.progressBarRef = null;
 
     this.state = {
+      currentTime: 0,
       progressPercentage: 0,
     };
 
@@ -38,6 +40,7 @@ class VideoControls extends Component {
     const progressFraction = currentTime / duration;
     const progressPercentage = progressFraction * 100;
     this.setState({
+      currentTime,
       progressPercentage,
     });
   }
@@ -92,6 +95,9 @@ class VideoControls extends Component {
               dangerouslySetInnerHTML={{__html: playPauseIcon}}
             />
           </div>
+          <CurrentTimeDisplay
+            currentTime={this.state.currentTime}
+          />
           <ProgressBar
             progressPercentage={this.state.progressPercentage}
             onProgressBarClick={this.onProgressBarClick}
