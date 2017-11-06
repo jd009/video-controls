@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import ProgressBar from './controls/progressBar';
 import CurrentTimeDisplay from './controls/currentTimeDisplay';
+import Volume from './controls/volume';
 
 import './videoControls.css';
 
@@ -103,6 +104,7 @@ class VideoControls extends Component {
             onProgressBarClick={this.onProgressBarClick}
             saveProgressBarRef={this.saveProgressBarRef}
           />
+          <Volume />
         </div>
       </div>
     );
