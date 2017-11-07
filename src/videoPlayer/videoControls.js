@@ -22,6 +22,7 @@ class VideoControls extends Component {
     this.onProgressBarClick = this.onProgressBarClick.bind(this);
     this.saveProgressBarRef = this.saveProgressBarRef.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
+    this.toggleMute = this.toggleMute.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -80,6 +81,17 @@ class VideoControls extends Component {
     this.forceUpdate();
   }
 
+  toggleMute(event) {
+    event.stopPropagation();
+
+    if (!this.props.videoPlayerRef) {
+      return;
+    }
+
+    this.props.videoPlayerRef.muted = !this.props.videoPlayerRef.muted;
+    this.forceUpdate();
+  }
+
   render() {
     let playPauseIcon = null;
     if (this.props.videoPlayerRef && !this.props.videoPlayerRef.paused) {
@@ -87,6 +99,8 @@ class VideoControls extends Component {
     } else {
       playPauseIcon = '&#9658;';
     }
+    const isMuted = this.props.videoPlayerRef !== null &&
+      this.props.videoPlayerRef.muted;
     return (
       <div className={'video-controls-container'}>
         <div className={'video-controls-bar'}>
@@ -104,7 +118,10 @@ class VideoControls extends Component {
             onProgressBarClick={this.onProgressBarClick}
             saveProgressBarRef={this.saveProgressBarRef}
           />
-          <Volume />
+          <Volume
+            toggleMute={this.toggleMute}
+            isMuted={isMuted}
+          />
         </div>
       </div>
     );
