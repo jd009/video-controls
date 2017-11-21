@@ -16,13 +16,22 @@ class VideoControls extends Component {
     this.state = {
       currentTime: 0,
       progressPercentage: 0,
+      bufferedPercentage: 0,
     };
 
+    this.updateTime = this.updateTime.bind(this);
     this.updateProgress = this.updateProgress.bind(this);
     this.onProgressBarClick = this.onProgressBarClick.bind(this);
     this.saveProgressBarRef = this.saveProgressBarRef.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
     this.toggleMute = this.toggleMute.bind(this);
+  }
+
+  componentWillUnmount() {
+    if (this.props.videoPlayerRef) {
+      this.props.videoPlayerRef.removeEventListener('timeupdate', this.updateTime);
+      this.props.videoPlayerRef.removeEventListener('progress', this.updateProgress);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,10 +42,11 @@ class VideoControls extends Component {
   }
 
   initControls(videoPlayerRef) {
-    videoPlayerRef.addEventListener('timeupdate', this.updateProgress);
+    videoPlayerRef.addEventListener('timeupdate', this.updateTime);
+    videoPlayerRef.addEventListener('progress', this.updateProgress);
   }
 
-  updateProgress() {
+  updateTime() {
     const currentTime = this.props.videoPlayerRef.currentTime;
     const duration = this.props.videoPlayerRef.duration;
     const progressFraction = currentTime / duration;
@@ -44,6 +54,19 @@ class VideoControls extends Component {
     this.setState({
       currentTime,
       progressPercentage,
+    });
+  }
+
+  updateProgress() {
+    const bufferedTimeRanges = this.props.videoPlayerRef.buffered;
+    const lastIndex = bufferedTimeRanges.length - 1;
+    // Approximate all buffered ranges using last buffered range.
+    const furthestBufferedTime = bufferedTimeRanges.end(lastIndex);
+    const duration = this.props.videoPlayerRef.duration;
+    const bufferedFraction = furthestBufferedTime / duration;
+    const bufferedPercentage = bufferedFraction * 100;
+    this.setState({
+      bufferedPercentage,
     });
   }
 
@@ -115,6 +138,7 @@ class VideoControls extends Component {
           />
           <ProgressBar
             progressPercentage={this.state.progressPercentage}
+            bufferedPercentage={this.state.bufferedPercentage}
             onProgressBarClick={this.onProgressBarClick}
             saveProgressBarRef={this.saveProgressBarRef}
           />

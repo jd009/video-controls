@@ -1,0 +1,8 @@
+.buffered-bar {
+  position: absolute;
+
+  height: 100%;
+  background-color: white;
+  opacity: 0.6;
+  border-radius: 5px;
+}

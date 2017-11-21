@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import BufferedBar from './progressBar/bufferedBar';
 
 import './progressBar.css';
 
@@ -16,6 +17,9 @@ class ProgressBar extends Component {
           ref={this.props.saveProgressBarRef}
           onClick={this.props.onProgressBarClick}
         >
+          <BufferedBar
+            bufferedPercentage={this.props.bufferedPercentage}
+          />
           <div
             style={progressBarInnerStyle}
             className="progress-bar-inner"
@@ -28,6 +32,7 @@ class ProgressBar extends Component {
 
 ProgressBar.propTypes = {
   progressPercentage: PropTypes.number.isRequired,
+  bufferedPercentage: PropTypes.number.isRequired,
   onProgressBarClick: PropTypes.func.isRequired,
   saveProgressBarRef: PropTypes.func.isRequired,
 };
