@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ProgressBar from './controls/progressBar';
+import ProgressBar from './controls/progressBar/progressBar';
 import CurrentTimeDisplay from './controls/currentTimeDisplay';
 import Volume from './controls/volume';
 

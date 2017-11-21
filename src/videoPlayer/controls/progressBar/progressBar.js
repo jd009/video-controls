@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import BufferedBar from './progressBar/bufferedBar';
+import BufferedBar from './bufferedBar';
 
 import './progressBar.css';
 
