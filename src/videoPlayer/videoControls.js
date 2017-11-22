@@ -59,6 +59,11 @@ class VideoControls extends Component {
 
   updateProgress() {
     const bufferedTimeRanges = this.props.videoPlayerRef.buffered;
+    const isBufferedRangesEmpty = bufferedTimeRanges.length === 0;
+    if (isBufferedRangesEmpty) {
+      return;
+    }
+
     const lastIndex = bufferedTimeRanges.length - 1;
     // Approximate all buffered ranges using last buffered range.
     const furthestBufferedTime = bufferedTimeRanges.end(lastIndex);
