@@ -11,3 +11,9 @@
   width: 100%;
   height: auto;
 }
+
+.video-container video {
+  background: black;
+  /* Ensure poster covers video space */
+  object-fit: cover;
+}

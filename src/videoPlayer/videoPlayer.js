@@ -27,6 +27,7 @@ class VideoPlayer extends Component {
           className={'video-element'}
           ref={this.saveVideoPlayerRef}
           src={'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}
+          poster={'https://upload.wikimedia.org/wikipedia/commons/7/70/Big.Buck.Bunny.-.Opening.Screen.png'}
         />
         <VideoControls
           videoPlayerRef={this.state.videoPlayerRef}
