@@ -130,7 +130,9 @@ class VideoControls extends Component {
     const isMuted = this.props.videoPlayerRef !== null &&
       this.props.videoPlayerRef.muted;
     return (
-      <div className={'video-controls-container'}>
+      <div className={'video-controls-container'}
+        onClick={this.togglePlay}
+      >
         <div className={'video-controls-bar'}>
           <div className="video-controls-play">
             <span className="play-icon"
