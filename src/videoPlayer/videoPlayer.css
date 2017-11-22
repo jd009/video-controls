@@ -2,12 +2,12 @@
   display: block;
   position: relative;
 
-  height: 360px;
-  width: 640px;
-
+  width: 80vw;
 }
 
 .video-container .video-element {
+  display: block;
+
   width: 100%;
   height: auto;
 }
